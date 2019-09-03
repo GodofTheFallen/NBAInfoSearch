@@ -7,8 +7,17 @@
 
 import scrapy
 
+from main.models import NewsPage
+
 
 class SpidersItem(scrapy.Item):
     # define the fields for your item here like:
     # name = scrapy.Field()
     pass
+
+
+from scrapy_djangoitem import DjangoItem
+
+
+class NewsPageItem(DjangoItem):
+    django_model = NewsPage
