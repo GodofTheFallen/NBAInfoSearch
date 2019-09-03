@@ -29,11 +29,11 @@
 {% block body %}
 
   <main role="main" class="inner cover d-flex h-75 align-items-center">
-    <form method="get" class="form-search">
+    <form method="get" class="form-search" action="result">
       <div class="form-group">
         <div class="input-group search-box">
-          <label for="keywords"> </label>
-          <input id="keywords" name="keywords" type="text" class="form-control">
+          <label for="search-box"> </label>
+          <input id="search-box" name="search" type="text" class="form-control" required>
           <div class="input-group-append">
             <button class="btn btn-info" type="submit">
               搜索
@@ -43,6 +43,8 @@
       </div>
     </form>
   </main>
-
+  <script>
+      $('#search').addClass("active");
+  </script>
 
 {% endblock %}
