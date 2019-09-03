@@ -1,12 +1,14 @@
 <!DOCTYPE html>
-<html lang="en">
-{% load static %}
+<html lang="zh-hans">
+
 <head>
   <meta charset="UTF-8">
   <title>{% block title %} {% endblock %}</title>
+  {% load static %}
   <link rel="stylesheet" href="{% static 'bootstrap.css' %}">
   {% block css %}
   {% endblock %}
+  <link rel="stylesheet" href="{% static 'cover.css' %}">
 
   <script src="{% static 'jquery-3.4.1.js' %}"></script>
   <script src="{% static 'bootstrap.bundle.js' %}"></script>
@@ -16,10 +18,31 @@
 
 </head>
 
-<body>
-{% block body %}
 
-{% endblock %}
+<body class="text-center">
+<div class="cover-container d-flex w-100 h-100 p-5 mx-auto flex-column">
+  <header class="masthead mb-auto">
+    <div class="inner">
+      <h3 class="masthead-brand">NBA资讯站</h3>
+      <nav class="nav nav-masthead justify-content-center">
+        <a class="nav-link active" href="#">搜索</a>
+        <a class="nav-link" href="#">新闻</a>
+        <a class="nav-link" href="#">球队</a>
+      </nav>
+    </div>
+  </header>
+
+  {% block body %}
+  {% endblock %}
+
+  <footer class="mastfoot mt-auto">
+    <div class="inner">
+      <p>Powered by <a href="https://getbootstrap.com/">Bootstrap</a>, by <a href="https://github.com/GodofTheFallen">@GodofTheFallen</a>.
+      </p>
+    </div>
+  </footer>
+</div>
 </body>
+
 
 </html>

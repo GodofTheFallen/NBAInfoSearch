@@ -1,9 +1,47 @@
 {% extends 'search/base.html' %}
+{% load static %}
 
 {% block title %}
   NBA资讯站|搜索
 {% endblock %}
 
+{% block css %}
+  <style>
+    html {
+      height: 100vh;
+    }
+
+    body {
+      height: 100vh;
+    }
+
+    .form-search {
+      margin: auto;
+    }
+
+    .search-box {
+      width: 120vh;
+    }
+  </style>
+{% endblock %}
+
 {% block body %}
+
+  <main role="main" class="inner cover d-flex h-75 align-items-center">
+    <form method="get" class="form-search">
+      <div class="form-group">
+        <div class="input-group search-box">
+          <label for="keywords"> </label>
+          <input id="keywords" name="keywords" type="text" class="form-control">
+          <div class="input-group-append">
+            <button class="btn btn-outline-info" type="submit">
+              搜索
+            </button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </main>
+
 
 {% endblock %}
