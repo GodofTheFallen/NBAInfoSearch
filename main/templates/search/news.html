@@ -3,8 +3,64 @@
 {% block title %}
   NBA资讯站|新闻
 {% endblock %}
+{% block css %}
+  <style>
+    .newstitle {
+      width: 60vw;
+      min-width: 40em;
+      background: #ffffff;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    h1.title {
+      color: #333333;
+    }
+
+    #More {
+      width: 30vw;
+      border-radius: 10px;
+      margin-top: 30px;
+      margin-bottom: 50px;
+    }
+
+    span.time {
+      margin-right: 2em;
+    }
+
+    span.source {
+      margin-left: 2em;
+    }
+
+    span.source-and-time {
+      font-size: 18px;
+      color: #4e555b;
+    }
+  </style>
+{% endblock %}
 {% block body %}
+  <ul class="list-group mx-auto">
+    {% for newstitle in titlelist %}
+      <div class="newstitle align-items-center m-3 p-3" onclick="getNewsPage({{ newstitle.id }})">
+        <h1 class="title">{{ newstitle.title }}</h1>
+        <span class="source-and-time">
+          <span class="time">{{ newstitle.time }}</span>
+          <span class="source">来源：{{ newstitle.source }}</span>
+        </span>
+      </div>
+    {% endfor %}
+  </ul>
+  <button class="btn-info more mx-auto p-2" id="More">点击加载更多</button>
   <script>
       $("#news").addClass("active");
   </script>
+{% endblock %}
+
+{% block js %}
+  <script>
+      function getNewsPage(page_number) {
+          window.open(`newspage/${page_number}`);
+      }
+  </script>
+
 {% endblock %}

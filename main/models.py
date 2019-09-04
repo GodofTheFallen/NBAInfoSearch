@@ -6,8 +6,8 @@ from django.db import models
 class NewsPage(models.Model):
     id = models.IntegerField(primary_key=True)
     url = models.URLField()
-    title = models.CharField(max_length=100)
+    title = models.TextField()
     time = models.DateTimeField()
-    source_name = models.CharField(max_length=20)
+    source_name = models.TextField()
     source_url = models.URLField()
-    body = models.CharField(max_length=5000)
+    body = models.TextField()

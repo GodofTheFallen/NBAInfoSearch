@@ -2,6 +2,10 @@
   <dictionary name="gtf_2">
     <words>
       <w>gitignore</w>
+      <w>newsbody</w>
+      <w>newspage</w>
+      <w>newstitle</w>
+      <w>titlelist</w>
     </words>
   </dictionary>
 </component>

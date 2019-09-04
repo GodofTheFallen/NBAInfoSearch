@@ -1,0 +1,54 @@
+{% extends 'search/base.html' %}
+{% load static %}
+{% block title %}
+  NBA资讯站|{{ newspage.title }}
+{% endblock %}
+{% block css %}
+  <style>
+    .newstitle {
+      border-color: #333333;
+      border-style: double;
+      border-width: thick;
+      border-radius: 10px;
+      width: 60vw;
+      vertical-align: center;
+      padding: 2em;
+      background-color: rgb(179, 228, 255);
+    }
+
+    .newstitle h1 {
+      color: #1b1e21;
+    }
+
+    .newsbody {
+      background: #ffffff;
+      max-width: 75vw;
+      margin: 12px;
+    }
+
+    p.para {
+      font-size: 24px;
+      margin: 2em;
+    }
+  </style>
+{% endblock %}
+{% block body %}
+  <div class="newstitle card-title mx-auto">
+    <h1>{{ newspage.title }}</h1>
+  </div>
+  <div class="newsbody card-body mx-auto text-left">
+    {% for para in newsbody %}
+      <p class="para text-dark">
+        {{ para }}
+      </p>
+    {% endfor %}
+
+  </div>
+  <script>
+      $("#news").addClass("active");
+  </script>
+{% endblock %}
+
+{% block js %}
+
+{% endblock %}
