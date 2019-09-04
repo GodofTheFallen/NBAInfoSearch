@@ -1,6 +1,6 @@
 import ast
 
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 
 from main.models import NewsPage
 
@@ -34,6 +34,6 @@ def search(request):
 
 
 def news_page(request, page_id):
-    newspage = NewsPage.objects.get(id=page_id)
+    newspage = get_object_or_404(NewsPage, id=page_id)
     newsbody = ast.literal_eval(newspage.body)
     return render(request, 'search/newspage.html', locals())
