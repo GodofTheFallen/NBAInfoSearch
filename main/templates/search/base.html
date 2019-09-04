@@ -6,9 +6,20 @@
   <title>{% block title %} {% endblock %}</title>
   {% load static %}
   <link rel="stylesheet" href="{% static 'bootstrap.css' %}">
+  <link rel="stylesheet" href="{% static 'cover.css' %}">
+  <style>
+    html {
+      height: 100vh;
+      min-width: 800px;
+    }
+
+    body {
+      height: 100vh;
+    }
+  </style>
+
   {% block css %}
   {% endblock %}
-  <link rel="stylesheet" href="{% static 'cover.css' %}">
 
   <script src="{% static 'jquery-3.4.1.js' %}"></script>
   <script src="{% static 'bootstrap.bundle.js' %}"></script>
