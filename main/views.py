@@ -1,7 +1,10 @@
-import ast
+import json
 
+import requests
+from django.http import JsonResponse
 from django.shortcuts import render, get_object_or_404
 
+from main.handle import handle_tf_idf
 from main.models import NewsPage
 
 
@@ -35,5 +38,28 @@ def search(request):
 
 def news_page(request, page_id):
     newspage = get_object_or_404(NewsPage, id=page_id)
-    newsbody = ast.literal_eval(newspage.body)
+    newsbody = json.loads(newspage.body)
     return render(request, 'search/newspage.html', locals())
+
+
+def spider_controller(request, spider_name):
+    return render(request, 'crawl.html', locals())
+
+
+def spider_start(request, spider_name):
+    page_max = request.POST['page_max']
+    if request.method == 'POST':
+        # 启动爬虫
+        url = 'http://localhost:6800/schedule.json'
+        data = {
+            'project': 'spiders',
+            'spider': spider_name,
+            'setting': 'page_max=' + page_max,
+        }
+        print(requests.post(url=url, data=data))
+    return JsonResponse({'result': 'ok'})
+
+
+def handle(request):
+    handle_tf_idf()
+    return JsonResponse({'result': 'ok'})

@@ -1,9 +1,6 @@
 import re
-from datetime import datetime
 
 import scrapy
-
-from ..items import NewsPageItem
 
 
 def news_text_parse(response):
@@ -18,21 +15,15 @@ def news_text_parse(response):
         },
         'body': response.css("div.artical-main-content p::text").getall()
     }
-    npi = NewsPageItem()
-    npi['id'] = int(dic['id'])
-    npi['url'] = dic['url']
-    npi['title'] = dic['title']
-    npi['time'] = datetime.strptime(dic['time'], ' %Y-%m-%d %H:%M:%S ')
-    npi['source_name'] = dic['source']['text']
-    npi['source_url'] = dic['source']['url']
-    npi['body'] = dic['body']
-    npi.save()
-    yield dic
+    return dic
 
 
 class NewsSpider(scrapy.Spider):
     name = "news"
-    page_max = 20
+
+    def __init__(self, page_max=20, *args, **kwargs):
+        self.page_max = int(page_max)
+        super(NewsSpider, self).__init__(*args, **kwargs)
     
     def start_requests(self):
         url_temp = 'http://voice.hupu.com/nba/'

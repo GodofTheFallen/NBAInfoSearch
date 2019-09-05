@@ -99,3 +99,11 @@ DJANGO_SETTINGS_MODULE = 'NBAInfoSearch.settings'
 sys.path.append(DJANGO_PROJECT_PATH)
 os.environ['DJANGO_SETTINGS_MODULE'] = DJANGO_SETTINGS_MODULE
 application = get_wsgi_application()
+
+import django
+
+django.setup()
+
+ITEM_PIPELINES = {
+    'spiders.pipelines.SpidersPipeline': 300
+}

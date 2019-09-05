@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  {% load static %}
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="{% static 'bootstrap.css' %}">
+  <script src="{% static 'jquery-3.4.1.js' %}"></script>
+  <script src="{% static 'bootstrap.bundle.js' %}"></script>
+  <title>Spider Controller - {{ spider_name }}</title>
+</head>
+<body class="text-center">
+<div class="mx-auto m-5">
+  <form method="post" action="/crawl-start/{{ spider_name }}">
+    {% csrf_token %}
+    <label for="page_max">page_max = </label><input type="number" name="page_max">
+    <button id="start" class="btn-primary" type="submit">Start Spider: {{ spider_name }}</button>
+  </form>
+</div>
+<div class="mx-auto m-5">
+  <button id="start" class="btn-secondary" onclick="location.href='/handle'">Handle data</button>
+</div>
+
+
+</body>
+</html>

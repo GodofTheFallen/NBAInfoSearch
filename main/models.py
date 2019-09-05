@@ -3,6 +3,13 @@ from django.db import models
 
 # Create your models here.
 
+
+class KeyWord(models.Model):
+    word = models.TextField()
+    idf = models.FloatField()
+    pass
+
+
 class NewsPage(models.Model):
     id = models.IntegerField(primary_key=True)
     url = models.URLField()
@@ -11,3 +18,9 @@ class NewsPage(models.Model):
     source_name = models.TextField()
     source_url = models.URLField()
     body = models.TextField()
+    keywords = models.ManyToManyField(KeyWord)
+    title_key_mod = models.FloatField(default=0.0)
+    body_key_mod = models.FloatField(default=0.0)
+
+    def get_absolute_url(self):
+        return '/newspage/' + str(self.id)
