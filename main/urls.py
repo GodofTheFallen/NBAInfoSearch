@@ -10,5 +10,5 @@ urlpatterns = [
     path('newspage/<int:page_id>', views.news_page, name='news_page'),
     path('crawl/<str:spider_name>', views.spider_controller, name='spider_controller'),
     path('crawl-start/<str:spider_name>', views.spider_start, name='spider_start'),
-    path('handle', views.handle, name='handle'),
+    path('rebuild', views.rebuild, name='rebuild'),
 ]

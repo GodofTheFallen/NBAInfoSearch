@@ -13,7 +13,10 @@ class NewsPageAdmin(admin.ModelAdmin):
         'title',
         'time',
         ('source_name', 'source_url'),
-        'body'
+        'body',
+        'keywords',
+        'title_key_mod',
+        'body_key_mod',
     )
     list_display = ('id', 'title')
     list_filter = ('time', 'source_name')

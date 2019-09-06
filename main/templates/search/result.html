@@ -1,11 +1,112 @@
 {% extends 'search/base.html' %}
 {% load static %}
+
 {% block title %}
   NBA资讯站|搜索结果
 {% endblock %}
+
+{% block css %}
+  <style>
+    .search-box {
+      width: 60vw;
+    }
+
+    .newstitle {
+      width: 60vw;
+      min-width: 60em;
+      background: #ffffff;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    h1.title {
+      color: #333333;
+    }
+
+    #More {
+      width: 30vw;
+      border-radius: 10px;
+      margin-top: 30px;
+      margin-bottom: 50px;
+    }
+
+    span.time {
+      margin-right: 2em;
+    }
+
+    span.source {
+      margin-left: 2em;
+    }
+
+    span.source-and-time {
+      font-size: 18px;
+      color: #4e555b;
+    }
+  </style>
+{% endblock %}
+
 {% block body %}
+  <form method="get" class="form-search mx-auto" action="result">
+    <div class="form-group">
+      <div class="input-group search-box">
+        <label for="search-box"> </label>
+        <input id="search-box" name="search" type="text" class="form-control" maxlength="40"
+               value="{{ request.GET.search }}" required>
+        <div class="input-group-append">
+          <button class="btn btn-info" type="submit">
+            搜索
+          </button>
+        </div>
+      </div>
+      搜索用时：{{ result.time }}秒，共找到 {{ result.len }} 条结果，标题无高亮可能是正文匹配数较多
+    </div>
+  </form>
+  <ul class="list-group mx-auto">
+    {% for page in result.page_rank %}
+      <div class="newstitle align-items-center m-3 p-3" onclick="getNewsPage({{ page.page.id }})">
+        <h1 class="title">{{ page.page.title }}</h1>
+        <div class="sim m-1 text-dark">匹配度：{{ page.sim }}</div>
+        <span class="source-and-time">
+          <span class="time">{{ page.page.time }}</span>
+          <span class="source">来源：{{ page.page.source }}</span>
+        </span>
+      </div>
+    {% endfor %}
+  </ul>
+
+{% endblock %}
+
+{% block js %}
   <script>
-      $("#search").addClass("active");
+      function getNewsPage(page_number) {
+          window.open(`newspage/${page_number}`);
+      }
+
+      $(document).ready(function () {
+          $("#search").addClass("active");
+          var keywords = [];
+          {% for word in result.keywords %}
+              keywords.push("{{ word }}");
+          {% endfor %}
+          console.log(keywords);
+          for (let i = 0; i < keywords.length; ++i) {
+              let replace = keywords[i];//要改变颜色的文字
+              console.log(i);
+              //页面加载时自动改变样式
+              $("h1.title").each(function (index, item) {
+                      console.log(item);
+                      let word = $(item).html();
+                      console.log(word);
+                      word = word.replace(new RegExp(replace, 'g'),
+                          "<span style='color:red;font-weight: bold;'>" + replace
+                          + "</span>");
+                      console.log(word);
+                      $(item).html(word);
+                  }
+              );
+          }
+      })
+      ;
   </script>
-  {{ result }}
+
 {% endblock %}

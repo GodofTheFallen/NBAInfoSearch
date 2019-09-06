@@ -7,6 +7,8 @@ import json
 # See: https://docs.scrapy.org/en/latest/topics/item-pipeline.html
 from datetime import datetime
 
+from django.db import transaction
+
 from .items import NewsPageItem
 
 
@@ -17,11 +19,12 @@ class SpidersPipeline(object):
         else:
             self.page_max = 20
         self.items = []
-    
+
+    @transaction.atomic
     def close_spider(self, spider):
         # And here we are saving our crawled data with django models.
-        for npi in self.items:
-            npi.save()
+        for item in self.items:
+            item.save()
     
     def process_item(self, item, spider):
         npi = NewsPageItem()

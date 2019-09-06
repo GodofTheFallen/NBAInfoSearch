@@ -30,6 +30,21 @@
       font-size: 24px;
       margin: 2em;
     }
+
+    span.time {
+      margin-right: 2em;
+    }
+
+    span.source {
+      margin-left: 2em;
+      margin-right: 2em;
+    }
+
+    span.source-and-time {
+      font-size: 18px;
+      color: #4e555b;
+      margin-top: 1em;
+    }
   </style>
 {% endblock %}
 {% block body %}
@@ -37,12 +52,16 @@
     <h1>{{ newspage.title }}</h1>
   </div>
   <div class="newsbody card-body mx-auto text-left">
+    <br>
     {% for para in newsbody %}
       <p class="para text-dark">
         {{ para }}
       </p>
     {% endfor %}
-
+    <span class="source-and-time float-right">
+      <span class="time">{{ newspage.time }}</span>
+      <span class="source">来源：{{ newspage.source_name }}</span>
+    </span>
   </div>
   <script>
       $("#news").addClass("active");
