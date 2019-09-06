@@ -12,7 +12,7 @@
 <div class="mx-auto m-5">
   <form method="post" action="/crawl-start/{{ spider_name }}">
     {% csrf_token %}
-    <label for="page_max">page_max = </label><input type="number" name="page_max">
+    <label for="page_max">page_max = <input type="number" name="page_max" value="5"></label>
     <button id="start" class="btn-primary" type="submit">Start Spider: {{ spider_name }}</button>
   </form>
 </div>

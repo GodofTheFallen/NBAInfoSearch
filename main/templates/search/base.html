@@ -5,6 +5,7 @@
   <meta charset="UTF-8">
   <title>{% block title %} {% endblock %}</title>
   {% load static %}
+  {% load cache %}
   <link rel="stylesheet" href="{% static 'bootstrap.css' %}">
   <link rel="stylesheet" href="{% static 'cover.css' %}">
   <style>
@@ -38,7 +39,7 @@
       <nav class="nav nav-masthead justify-content-center">
         <a id="search" class="nav-link" href="/">搜索</a>
         <a id="news" class="nav-link" href="/news">新闻</a>
-        <a id="teams" class="nav-link" href="/teams">球队</a>
+        <!--<a id="teams" class="nav-link" href="/teams">球队</a>-->
       </nav>
     </div>
   </header>

@@ -63,7 +63,8 @@
   </form>
   <ul class="list-group mx-auto">
     {% for page in result.page_rank %}
-      <div class="newstitle align-items-center m-3 p-3" onclick="getNewsPage({{ page.page.id }})">
+      <div class="newstitle align-items-center m-3 p-3" id='title-{{ forloop.counter }}'
+           onclick="getNewsPage({{ page.page.id }})">
         <h1 class="title">{{ page.page.title }}</h1>
         <div class="sim m-1 text-dark">匹配度：{{ page.sim }}</div>
         <span class="source-and-time">
@@ -73,7 +74,7 @@
       </div>
     {% endfor %}
   </ul>
-
+  <button class="btn-info more mx-auto p-2" id="More" onclick="show_more()">点击加载更多</button>
 {% endblock %}
 
 {% block js %}
@@ -82,6 +83,8 @@
           window.open(`newspage/${page_number}`);
       }
 
+      var max_display = 10;
+      const total = Number({{ result.len }});
       $(document).ready(function () {
           $("#search").addClass("active");
           var keywords = [];
@@ -105,8 +108,25 @@
                   }
               );
           }
-      })
-      ;
+          for (let i = max_display + 1; i <= total; ++i) {
+              $('#title-' + i).hide();
+          }
+          if (max_display >= total) {
+              $('#More').text('已经没有更多了');
+              $('#More').attr("disabled", true);
+          }
+      });
+
+      function show_more() {
+          for (let i = max_display + 1; i <= total && i <= max_display + 10; ++i) {
+              $('#title-' + i).show();
+          }
+          max_display += 10;
+          if (max_display >= total) {
+              $('#More').text('已经没有更多了');
+              $('#More').attr("disabled", true);
+          }
+      }
   </script>
 
 {% endblock %}

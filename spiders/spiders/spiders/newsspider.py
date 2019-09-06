@@ -21,7 +21,7 @@ def news_text_parse(response):
 class NewsSpider(scrapy.Spider):
     name = "news"
 
-    def __init__(self, page_max=20, *args, **kwargs):
+    def __init__(self, page_max=5, *args, **kwargs):
         self.page_max = int(page_max)
         super(NewsSpider, self).__init__(*args, **kwargs)
     

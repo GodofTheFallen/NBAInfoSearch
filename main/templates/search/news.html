@@ -41,7 +41,8 @@
 {% block body %}
   <ul class="list-group mx-auto">
     {% for newstitle in titlelist %}
-      <div class="newstitle align-items-center m-3 p-3" onclick="getNewsPage({{ newstitle.id }})">
+      <div class="newstitle align-items-center m-3 p-3" id='title-{{ forloop.counter }}'
+           onclick="getNewsPage({{ newstitle.id }})">
         <h1 class="title">{{ newstitle.title }}</h1>
         <span class="source-and-time">
           <span class="time">{{ newstitle.time }}</span>
@@ -50,7 +51,7 @@
       </div>
     {% endfor %}
   </ul>
-  <button class="btn-info more mx-auto p-2" id="More">点击加载更多</button>
+  <button class="btn-info more mx-auto p-2" id="More" onclick="show_more()">点击加载更多</button>
   <script>
       $("#news").addClass("active");
   </script>
@@ -58,8 +59,31 @@
 
 {% block js %}
   <script>
+      var max_display = 10;
+      const total = Number({{ titlelist|length }});
+      $(document).ready(function () {
+          for (let i = max_display + 1; i <= total; ++i) {
+              $('#title-' + i).hide();
+          }
+          if (max_display >= total) {
+              $('#More').text('已经没有更多了');
+              $('#More').attr("disabled", true);
+          }
+      });
+
       function getNewsPage(page_number) {
           window.open(`newspage/${page_number}`);
+      }
+
+      function show_more() {
+          for (let i = max_display + 1; i <= total && i <= max_display + 10; ++i) {
+              $('#title-' + i).show();
+          }
+          max_display += 10;
+          if (max_display >= total) {
+              $('#More').text('已经没有更多了');
+              $('#More').attr("disabled", true);
+          }
       }
   </script>
 

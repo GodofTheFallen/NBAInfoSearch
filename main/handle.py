@@ -14,7 +14,6 @@ from main.models import NewsPage
 
 @transaction.atomic
 def rebuild():
-    KeyWord.objects.all().delete()
     keywords = {}
     corpus = []
     for item in NewsPage.objects.all():
@@ -46,32 +45,41 @@ def rebuild():
         idf.write(word + ' {0:.8f}'.format(math.log(total / keywords[word])) + '\n')
     
     idf.close()
-
-    KeyWord.objects.bulk_create(keyword_list)
     
     jieba.analyse.set_stop_words('main/stop_words.txt')
     jieba.analyse.set_idf_path('main/idf.txt.big')
     
     current = 0
-
-    for item in NewsPage.objects.all():
-        current += 1
+    item_list = NewsPage.objects.all()
+    item_keyword_list = []
+    for item in item_list:
+        item_keyword_list.append(set())
         print(current)
-        item.keywords.clear()
+        current += 1
         title = item.title
         body = '\n'.join(json.loads(item.body))
         title_tags = jieba.analyse.extract_tags(title, topK=5, withWeight=True)
         title_mod = 0
         for tag in title_tags:
             if tag[0] in keyword_items.keys():
-                item.keywords.add(KeyWord.objects.get(id=keyword_items[tag[0]]))
+                item_keyword_list[-1].add(keyword_items[tag[0]])
                 title_mod += tag[1] ** 2
         item.title_key_mod = title_mod
         body_tags = jieba.analyse.extract_tags(body, topK=20, withWeight=True)
         body_mod = 0
         for tag in body_tags:
             if tag[0] in keyword_items.keys():
-                item.keywords.add(KeyWord.objects.get(id=keyword_items[tag[0]]))
+                item_keyword_list[-1].add(keyword_items[tag[0]])
                 body_mod += tag[1] ** 2
         item.body_key_mod = body_mod
-        item.save()
+    current = 0
+    with transaction.atomic():
+        KeyWord.objects.all().delete()
+        KeyWord.objects.bulk_create(keyword_list)
+        for item in item_list:
+            print(current)
+            item.save()
+            item.keywords.clear()
+            for word in item_keyword_list[current]:
+                item.keywords.add(KeyWord.objects.get(id=word))
+            current += 1
